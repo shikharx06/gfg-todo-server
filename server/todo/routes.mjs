@@ -9,8 +9,9 @@ export const todoRouter = Router();
 todoRouter.get('/', async (req, res) => {
   // limit is a string
   const limit = req.query.limit;
+  console.log(req.user);
   console.log(limit);
-  const todos = await getAllTodos(req.query.limit);
+  const todos = await getAllTodos(req.user.id, req.query.limit);
 
   res.send(formatResponse('TODOS FETCHED.', todos));
 });

@@ -10,18 +10,18 @@ export const addTodo = async ({ title, description }) => {
 
   // add title and description
   const response = await todoCollection.insertOne({ title, description });
-  console.log(response);
+  // console.log(response);
 };
 
 export const getAllTodos = async (limit = 10) => {
-  console.log('getALLTODOS::', limit);
+  // console.log('getALLTODOS::', limit);
   if (typeof limit === 'string') {
     limit = parseInt(limit);
-    console.log(typeof limit);
+    // console.log(typeof limit);
     if (isNaN(limit)) throw new Error('limit should be a valid integer');
   }
 
-  console.log('getALLTODOS::', limit);
+  // console.log('getALLTODOS::', limit);
 
   const todoCollection = db.collection('todos');
 

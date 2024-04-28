@@ -10,14 +10,15 @@ export const addTodo = async ({ title, description }) => {
   await todo.save();
 };
 
-export const getAllTodos = async (limit = 10) => {
+export const getAllTodos = async (userId, limit = 10) => {
   if (typeof limit === 'string') {
     limit = parseInt(limit);
-    console.log(typeof limit);
+    // console.log(typeof limit);
     if (isNaN(limit)) throw new Error('limit should be a valid integer');
   }
 
-  return await Todo.find({}).limit(limit);
+  const availableTodos = await Todo.find({ createdBy: userId }).limit(limit);
+  return availableTodos;
 };
 
 export const getTodoById = async (id) => {

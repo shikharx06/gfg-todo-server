@@ -4,6 +4,8 @@ import 'express-async-errors';
 import { todoRouter } from './todo/routes.mjs';
 import { formatResponse } from './utils/formatResponse.mjs';
 import { InitializeDB } from './db/mongooseConn.mjs';
+import { authRouter } from './users/routes.mjs';
+import { verifyUser } from './utils/middleware.mjs';
 // const rexpre = require('express')
 
 // dotenv.config();
@@ -14,15 +16,19 @@ const app = express();
 // app.use(cors());
 app.use(express.json());
 
+app.use('/auth', authRouter);
 // Load the /todos routes
-app.use('/todo', todoRouter);
+app.use('/todo', verifyUser, todoRouter);
 
-app.use('/', (req, res) => res.send('health check '));
+// 404 router
+app.use('/', (req, res) =>
+  res.status(404).send(`Missing route ${req.method} ${req.path}`)
+);
 // app.use('/user', userRouter);
 
 // Global error handling
 app.use((err, _req, res, next) => {
-  console.log(err);
+  // console.log(err);
   if (err) {
     res.status(500).send(formatResponse('Error occured', null, err.message));
   }
