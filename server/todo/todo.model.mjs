@@ -6,6 +6,7 @@ const TodoSchema = new mongoose.Schema({
   createdBy: { type: String, required: true, index: true },
   createdAt: { type: Date, default: Date.now },
   updatedAt: { type: Date, default: Date.now },
+  completed: { type: Boolean, default: false },
 });
 
 export const Todo = new mongoose.model('Todos', TodoSchema);

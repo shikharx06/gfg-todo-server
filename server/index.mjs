@@ -6,6 +6,7 @@ import { formatResponse } from './utils/formatResponse.mjs';
 import { InitializeDB } from './db/mongooseConn.mjs';
 import { authRouter } from './users/routes.mjs';
 import { verifyUser } from './utils/middleware.mjs';
+import { uploadRouter } from './storage/route.mjs';
 // const rexpre = require('express')
 
 // dotenv.config();
@@ -13,12 +14,13 @@ import { verifyUser } from './utils/middleware.mjs';
 const PORT = process.env.PORT || 5050;
 const app = express();
 
-// app.use(cors());
+app.use(cors({ origin: '*' }));
 app.use(express.json());
 
 app.use('/auth', authRouter);
 // Load the /todos routes
 app.use('/todo', verifyUser, todoRouter);
+app.use('/upload', verifyUser, uploadRouter);
 
 // 404 router
 app.use('/', (req, res) =>

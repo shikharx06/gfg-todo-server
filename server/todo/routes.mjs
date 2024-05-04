@@ -1,6 +1,11 @@
 import { Router } from 'express';
 // import { addTodo, getAllTodos, getTodoById } from './todoService.mjs';
-import { addTodo, getAllTodos, getTodoById } from './todoService.mongoose.mjs';
+import {
+  addTodo,
+  getAllTodos,
+  getTodoById,
+  updateTodo,
+} from './todoService.mongoose.mjs';
 import { formatResponse } from '../utils/formatResponse.mjs';
 
 export const todoRouter = Router();
@@ -36,7 +41,10 @@ todoRouter.post('/', async (req, res) => {
 
 // TODO: complete rest of the methods yourself.
 // update a todo
-todoRouter.put('/:id', (req, res) => {});
+todoRouter.put('/:id', async (req, res) => {
+  await updateTodo(req.params.id, req.user.id, req.body);
+  res.send(formatResponse('TODO UPDATED SUCCESSFULLY.'));
+});
 
 // delete a todo
 todoRouter.delete('/:id', (req, res) => {});
